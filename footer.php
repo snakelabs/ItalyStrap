@@ -1,5 +1,6 @@
 <!-- Footer -->
     <footer itemscope itemtype="http://schema.org/WPFooter">
+		<?php if( is_active_sidebar( 'footer-box-1' ) || is_active_sidebar( 'footer-box-2' ) || is_active_sidebar( 'footer-box-3' ) || is_active_sidebar( 'footer-box-4' ) ): ?>
 	    	<div class="container">
 				<hr>
 	        	<div class="row" itemscope itemtype="http://schema.org/WPSideBar">
@@ -20,6 +21,7 @@
 					<?php endif; ?>
 	            </div>
 	        </div>
+		<?php endif; ?>
 	    	<div class="container"><!-- #copyright -->
 				<hr>
 	        	<div class="row">
