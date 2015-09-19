@@ -1,10 +1,21 @@
 <?php
+// _deprecated_file( basename(__FILE__), 'ItalyStrap 2.1.0', null, __( 'This file no longer needs to be included.' ) );
 /**
  * @link http://mkoerner.de/breadcrumbs-for-wordpress-themes-with-bootstrap-3/
  * Bootstrap breadcrumbs for wordpress modified by Enea Overclokk
+ *
+ * Da modificare - inserire funzione get_category_parent per le categorie genitori
+ * @link http://wordpress.org/support/topic/how-to-get-parent-category-name?replies=4
+ * @link http://codex.wordpress.org/Function_Reference/get_category_parents
+ * @link https://core.trac.wordpress.org/browser/tags/4.0/src/wp-includes/category-template.php#L0
+ * Inserire markup rdfa per google richsnippet
+ *
+ * @deprecated 2.1.0
+ * @deprecated Use new ItalyStrapBreadcrumbs( $defaults );
+ * @see ItalyStrapBreadcrumbs( $defaults );
  */
 function create_breadcrumbs() {
-
+  _deprecated_function( __FUNCTION__, 'ItalyStrap 2.1.0', 'ItalyStrap_the_breadcrumbs' );
   global $post;
   if (isset($post->ID)) {
     $postID = $post->ID;
@@ -12,7 +23,8 @@ function create_breadcrumbs() {
     $postID = NULL;
   }
   $categories = get_the_category($postID);
-
+  // var_dump(get_category_parents( get_query_var('cat'), false, ' / ' ));
+  // var_dump($categories);
   if(!is_home() || !is_front_page()) {
 
     echo '<div itemscope itemtype="http://schema.org/WebPage"><ol class="breadcrumb" itemprop="breadcrumb">';
@@ -31,6 +43,10 @@ function create_breadcrumbs() {
       }
 
     } elseif (is_category()) {
+      // echo '<li>';
+      // echo get_category_parents( get_query_var('cat'), true, '</li><li>', true );
+      // echo '</li>';
+
       echo '<li>';
       single_cat_title();
       echo '</li>';
@@ -78,4 +94,3 @@ function create_breadcrumbs() {
     echo '</ol></div>';
   }
 }
-?>
