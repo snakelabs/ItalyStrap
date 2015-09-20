@@ -32,8 +32,10 @@ get_header(); ?>
                         get_template_part( 'loops/content', 'none');
 
                     endif;
-                    
-					comments_template(); ?> 	
+					if(comments_open()){
+						comments_template();
+					}
+					?>
    
                 </div><!-- / .col-md-8 -->
 				<?php get_sidebar(); ?> 
