@@ -3,9 +3,11 @@
 		<h1><a itemprop="url" href="<?php the_permalink(); ?>" title="<?php the_title_attribute() ?>" rel="bookmark">
 		<span itemprop="headline"><?php the_title(); ?></span></a></h1>
 	</header>
+	<?php if(get_post_meta($post->ID,'show_page_meta', true)!=='off'){ ?>
 	<footer>
 		<?php get_template_part('template/meta'); ?>
 	</footer>
+	<?php } ?>
 	<?php if( is_preview() ) : ?>  
 		<div class="alert alert-info">  
 			<?php _e( '<strong>Note:</strong> You are previewing this post. This post has not yet been published.', 'ItalyStrap' ); ?>  
@@ -34,14 +36,18 @@
 		<?php } ?>
 		<div  itemprop="articleBody"><?php the_content(); ?></div>
 		<span class="clearfix"></span>
+		<?php if(get_post_meta($post->ID,'show_lasteditdate', true)!=='off'){ ?>
 		<p class="label label-info"><?php _e('Last edit:', 'ItalyStrap'); ?> <time datetime="<?php the_modified_time('Y-m-d') ?>" itemprop="dateModified"><?php the_modified_time('d F Y') ?></time></p>
+		<?php } ?>
 		<span class="clearfix"></span>
 			<?php edit_post_link( __( 'Edit', 'ItalyStrap' ), '<span class="btn btn-sm btn-primary margin-top-25">', '</span>' ); ?>
 	</section>
 	<?php get_template_part( 'template/social-button');?>
 	<?php echo italystrap_ttr_wc();?>
 	<span class="clearfix"></span>
+	<?php if(get_post_meta($post->ID,'show_author_box', true)!=='off'){ ?>
 	<?php get_template_part( 'template/author_meta');?>
+	<?php } ?>
 	<meta itemprop="interactionCount" content="UserComments:<?php comments_number(0, 1, '%');?>" />
 </article>
 <hr>
