@@ -48,6 +48,8 @@
 	<?php if(get_post_meta($post->ID,'show_author_box', true)!=='off'){ ?>
 	<?php get_template_part( 'template/author_meta');?>
 	<?php } ?>
+	<?php if(comments_open()){ ?>
 	<meta itemprop="interactionCount" content="UserComments:<?php comments_number(0, 1, '%');?>" />
+	<?php } ?>
 </article>
 <hr>
