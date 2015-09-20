@@ -13,7 +13,7 @@ function italystrap_select_slide( $post ){
 	?>
 	<p>
 		<input type="checkbox" name="slide" id="slide" <?php checked( $check, 'on' ); ?> />
-		<label for="slide"><?php _e('Do you want show in home slider?', 'ItalyStrap'); ?></label>
+		<label for="slide"><?php _e('Do you want to show it in the home slider?', 'ItalyStrap'); ?></label>
 	</p>
 	<?php	
 }
@@ -37,4 +37,3 @@ function italystrap_meta_box_save( $post_id ){
 	$chk = ( isset( $_POST['slide'] ) && $_POST['slide'] ) ? 'on' : 'off';
 	update_post_meta( $post_id, 'slide', $chk );
 }
-?>

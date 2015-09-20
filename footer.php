@@ -1,3 +1,8 @@
+<?php
+/**
+ * The footer template file.
+ */
+?>
 <!-- Footer -->
     <footer itemscope itemtype="http://schema.org/WPFooter">
 		<?php if( is_active_sidebar( 'footer-box-1' ) || is_active_sidebar( 'footer-box-2' ) || is_active_sidebar( 'footer-box-3' ) || is_active_sidebar( 'footer-box-4' ) ): ?>
@@ -26,7 +31,7 @@
 				<hr>
 	        	<div class="row">
 		        	<div class="col-md-12">
-						<p class="text-muted">&copy; <span itemprop="copyrightYear"><?php echo date('Y'); ?></span> <?php bloginfo('name'); ?> | Developed by <a href="<?php echo 'http://www.overclokk.net'; ?>" rel="nofollow" itemprop="url">Overclokk.net</a> | Theme name: <a href="<?php echo 'http://www.overclokk.net/italystrap'; ?>" rel="nofollow" itemprop="url">ItalyStrap</a> <?php if ( !is_child_theme() ): ?>| Theme version: <span class="badge" itemprop="version"><?php italystrap_version(); ?></span><?php endif; ?>
+						<p class="text-muted small">&copy; <span itemprop="copyrightYear"><?php echo date('Y'); ?></span> <?php bloginfo('name'); ?> | Theme developed by <a href="http://www.overclokk.net" rel="nofollow" itemprop="url">Overclokk.net</a> | Theme name: <a href="http://www.italystrap.it" rel="nofollow" itemprop="url">ItalyStrap</a> <?php if ( !is_child_theme() ): ?>| Theme version: <span class="badge" itemprop="version"><?php italystrap_version(); ?></span><?php endif; ?>
 						</p>
 					</div>
                 </div>

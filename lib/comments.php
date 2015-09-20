@@ -38,7 +38,7 @@ function ItalyStrap_custom_comment($comment, $args, $depth){
 								
 								</li>
 								<li><time datetime="<?php comment_date('Y-m-d', $comment) ?>" itemprop="datePublished"><?php comment_date('j M Y', $comment) ?></time></li>
-								<?php edit_comment_link(__('Edit','ItalyStrap'),'<span class="btn btn-sm btn-info pull-right"><i class="glyphicon glyphicon-pencil"></i> ','</span>') ?>
+								<?php edit_comment_link(__('Edit','ItalyStrap'),'<span class="btn btn-sm btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i> ','</span>') ?>
 							</ul>
 
 								<p itemprop="text"><?php echo get_comment_text($comment); ?></p>
@@ -78,15 +78,21 @@ function ItalyStrap_custom_comment($comment, $args, $depth){
 */
 class ItalyStrap_Walker_Comment extends Walker_Comment {
 	function start_lvl(&$output, $depth = 0, $args = array()) {
-		$GLOBALS['comment_depth'] = $depth + 1; ?>
+
+		$GLOBALS['comment_depth'] = $depth + 1;
+		?>
+
 		<span class="clearfix"></span>
 		<ul <?php comment_class('media list-unstyled comment-' . get_comment_ID()); ?>>
-			<?php
+
+		<?php
 		}
 
 		function end_lvl(&$output, $depth = 0, $args = array()) {
 			$GLOBALS['comment_depth'] = $depth + 1;
-			echo '</ul>';
+		?>
+		</ul>
+		<?php
 		}
 
 		function start_el(&$output, $comment, $depth = 0, $args = array(), $id = 0) {
@@ -102,7 +108,9 @@ class ItalyStrap_Walker_Comment extends Walker_Comment {
 			extract($args, EXTR_SKIP);
 			global $post;
 			?>
-			
+
+		<span class="clearfix"></span>
+		<ul <?php comment_class('media list-unstyled comment-' . get_comment_ID()); ?>>
 
 			<?php 
 			/**
@@ -118,11 +126,20 @@ class ItalyStrap_Walker_Comment extends Walker_Comment {
 					<ul class="list-inline margin-bottom-10">
 						<li>
 							<h4 class="media-heading">
-								<a class="url" rel="external nofollow" href="<?php comment_author_url(); ?>" itemprop="url"><span itemprop="author" itemscope itemtype="http://schema.org/Person"><?php echo get_comment_author() ?><meta itemprop="image" content="<?php echo italystrap_get_avatar_url(get_comment_author_email()); ?>"/></span></a>
-								<?php
+
+							<?php if ( get_comment_author_url() ) { ?>
+
+								<a class="url" rel="external nofollow" href="<?php comment_author_url(); ?>" itemprop="url"><span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><?php echo get_comment_author() ?></span><meta itemprop="image" content="<?php echo italystrap_get_avatar_url(get_comment_author_email()); ?>"/></span></a>
+
+							<?php } else { ?>
+
+								<span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><?php echo get_comment_author() ?></span><meta itemprop="image" content="<?php echo italystrap_get_avatar_url(get_comment_author_email()); ?>"/></span>
+
+							<?php	}
+
 								printf(
 								// If current post author is also comment author, make it known visually.
-									($comment->user_id === $post->post_author) ? '<span class="label label-danger"> ' . __(
+									($comment->user_id === $post->post_author) ? ' <span class="label label-danger"> ' . __(
 										'The Boss :-)',
 										'ItalyStrap'
 									) . '</span> ' : ''); ?>
@@ -133,7 +150,7 @@ class ItalyStrap_Walker_Comment extends Walker_Comment {
 						</li>
 						
 						<?php if ( is_user_logged_in() ): ?>
-							<a href="<?php echo get_edit_comment_link(); ?>" class="btn btn-sm btn-info pull-right"><?php echo __('Edit','ItalyStrap') ; ?> <i class="glyphicon glyphicon-pencil"></i></a>
+							<a href="<?php echo get_edit_comment_link(); ?>" class="btn btn-sm btn-warning pull-right"><?php echo __('Edit','ItalyStrap') ; ?> <i class="glyphicon glyphicon-pencil"></i></a>
 						<?php endif ?>
 
 					</ul>
@@ -144,20 +161,31 @@ class ItalyStrap_Walker_Comment extends Walker_Comment {
 					</div>
 					<?php endif; ?>
 
-				<p itemprop="text"><?php echo get_comment_text($comment); ?></p>
-
-				<?php comment_reply_link( 
-									array_merge(
-										$args, 
-										array(
-											'reply_text' => __('Reply', 'ItalyStrap') . ' <i class="glyphicon glyphicon-arrow-down"></i>',
-											'depth'      => $depth,
-											'max_depth'  => $args['max_depth']
-											)
-										)
-									);?>
+				<div itemprop="text">
+					<?php comment_text( $comment->comment_ID ); ?>
+				</div>
 
 				<?php
+				/**
+				 * If comment type is not pingback and trackback add comment reply button
+				 *
+				 * @link http://codex.wordpress.org/Function_Reference/comment_reply_link
+				 * @see comment_reply.php for customizations
+				 */
+				if ( $comment->comment_type === '' ) {
+
+					$comment_author = $comment->comment_author;
+					comment_reply_link( 
+							array_merge(
+								$args, 
+								array(
+									'reply_text' => __('Reply to ', 'ItalyStrap') . $comment_author . ' <i class="glyphicon glyphicon-arrow-down"></i>',
+									'depth'      => $depth,
+									'max_depth'  => $args['max_depth']
+									)
+								)
+							);
+					}
 			}
 
 			function end_el(&$output, $comment, $depth = 0, $args = array()) {
@@ -166,6 +194,6 @@ class ItalyStrap_Walker_Comment extends Walker_Comment {
 					return;
 				}
 // Close ".media-body" <div> located in templates/comment.php, and then the comment's <li>
-				echo "</div></li>\n";
+				echo "</div></li></ul>\n";
 			}
 		}

@@ -1,9 +1,10 @@
 <?php
 //Registro l'area widget classica nella sidebar
-if (function_exists('register_sidebar'))
-{
+if (function_exists('register_sidebar')){
+	
 	register_sidebar( array(
 		'name' => 'Sidebar',
+		'id' => 'sidebar-1',
 		'before_widget' => '<div class="widget %2$s  col-sm-6 col-md-12">',
 		'after_widget' => "</div>",
 		'before_title' => '<h3 class="widget-title">',
@@ -49,4 +50,3 @@ if (function_exists('register_sidebar'))
 		'after_title' => '</h3>',
 	) );
 }
-?>
