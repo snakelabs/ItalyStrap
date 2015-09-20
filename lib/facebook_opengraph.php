@@ -3,7 +3,7 @@
 	<meta property="fb:admins" content="xxxxxxxxxx" />
 	<meta property="fb:app_id" content="xxxxxxxxxx">
 	<meta property="og:locale" content="it_IT"/>
-	<?php if (is_home() || is_front_page()) { ?>	
+	<?php if (is_home() || is_front_page() && !is_singular()) { ?>	
 <!-- Facebook Opengraph Home -->
     <meta property="og:site_name" content="<?php bloginfo('name'); ?>" />
     <meta property="og:description" content="<?php bloginfo('description'); ?>" />
@@ -24,5 +24,5 @@
 	<meta property="og:image" content="<?php echo italystrap_thumb_url() ?>" />
 	<meta property="og:url" content="<?php the_permalink(); ?>" />
 	<meta property="og:description" content="<?php echo italystrap_open_graph_desc(); ?>" />
-										<?php } ?>
+	<?php } ?>
 <!-- End Facebook Opengraph -->
